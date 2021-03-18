@@ -1,0 +1,56 @@
+{
+	"metadata": {
+		"type": "App"
+	},
+	"project": {
+		"shadows": true,
+		"shadowType": 1,
+		"vr": false,
+		"physicallyCorrectLights": false,
+		"toneMapping": 0,
+		"toneMappingExposure": 1
+	},
+	"camera": {
+		"metadata": {
+			"version": 4.5,
+			"type": "Object",
+			"generator": "Object3D.toJSON"
+		},
+		"object": {
+			"uuid": "95CE6B54-D478-4FB0-8B8B-B88BA82B0645",
+			"type": "PerspectiveCamera",
+			"name": "Camera",
+			"layers": 1,
+			"matrix": [0.985585,0,-0.169182,0,-0.03171,0.982278,-0.184726,0,0.166184,0.187428,0.968119,0,0,-80,500,1],
+			"fov": 40,
+			"zoom": 1,
+			"near": 10,
+			"far": 10000,
+			"focus": 10,
+			"aspect": 1.083333,
+			"filmGauge": 35,
+			"filmOffset": 0
+		}
+	},
+	"scene": {
+		"metadata": {
+			"version": 4.5,
+			"type": "Object",
+			"generator": "Object3D.toJSON"
+		},
+		"object": {
+			"uuid": "31517222-A9A7-4EAF-B5F6-60751C0BABA3",
+			"type": "Scene",
+			"name": "Scene",
+			"layers": 1,
+			"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]
+		}
+	},
+	"scripts": {
+		"31517222-A9A7-4EAF-B5F6-60751C0BABA3": [
+			{
+				"name": "Main",
+				"source": "scene.background = new THREE.Color(0x333333);\n\t\nvar geometry = new THREE.PlaneGeometry( 1, 1, 1 );\nvar material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );\n\n\nitertions = 300;\n\nvar arr = Array.from(Array(itertions), () => new Array(itertions));\n\n\nvar i = 0;\nwhile (i < itertions)\n{\n\tvar j = 0;\n\twhile (j <= i)\n\t{\n\t\t\n\t\tvar col = 0xffffff;\n\t\t//var col = toColor((i * 300) + (j * 30));\n\t\t\n\t\t//var eval = (i * j / i * j / i * j / i * j)\n\t\t//var eval = i / j;\n\t\t\n\t\tvar term1 = 0;\n\t\tvar term2 = 0;\n\t\t\n\t\tif(j > 0)\n\t\t\tterm1 = arr[i-1][j-1]\n\t\tif(j <= i - 1)\n\t\t\tterm2 = arr[i-1][j]\n\t\t\t\n\t\tif(i == 0)\n\t\t\tterm1 = 1;\n\t\t\n\t\tif(term1 > 100) term1 = term1 - 100;\n\t\tif(term2 > 100) term2 = term2 - 100;\n\n\t\t\n\t\tarr[i][j] = term1 + term2;\n\t\t\n\t\tvar eval = arr[i][j];\n\n\t\t\n\t\tif (eval % 2 == 1)\n\t\t\tcol = 0x550099;\n\t\telse\n\t\t\tcol = 0x559900;\n\t\t\n\t\tvar material = new THREE.MeshBasicMaterial( {color: col, side: THREE.DoubleSide} );\n\t\t\n\t\tvar pl = new THREE.Mesh( geometry, material );\n\t\t\n\t\tpl.translateY(-i);\n\t\tpl.translateX(j-(i*0.5));\n\t\t\n\t\tscene.add(pl);\n\t\t\n\t\tj++\n\t}\n\t\n\ti++\n}\n\nconsole.log(arr);\n\nfunction toColor(num) {\n    num >>>= 0;\n    var b = num & 0xFF,\n        g = (num & 0xFF00) >>> 8,\n        r = (num & 0xFF0000) >>> 16;\n    return \"rgb(\" + [r, g, b].join(\",\") + \")\";\n}"
+			}]
+	}
+}
